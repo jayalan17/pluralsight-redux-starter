@@ -1,42 +1,22 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import ShowGifs from './components/ShowGifs';
+import { render } from 'react-dom';
+import App from './components/App';
+import Home from './components/Home';
+import SearchGiphy from './components/SearchGiphy';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import SearchGifs from './components/SearchGifs';
-import util from 'util';
 
-const testGifs = [
-  {
-    name: "cat",
-    description: "grumpy cat",
-    url: "https://media.giphy.com/media/gSotjAQJmPTJm/giphy.gif"
-  }
-];
 
-class App extends React.Component {
+render((
+  <Router history={browserHistory}>
+    <Route path="/" component={App}>
+      <IndexRoute component={Home}/>
+      <Route path="/SearchGiphy" component={SearchGiphy}/>
+      <Route path="/SearchGifs" component={SearchGifs}/>
+    </Route>
+  </Router>
+), document.getElementById('app'));
 
-  constructor() {
-    super();
-    this.state = {
-      images: testGifs
-    };
-    this.addNewImage = this.addNewImage.bind(this);
-  }
-
-  addNewImage(img) {
-    testGifs.push(img);
-    this.setState({images: testGifs});
-  }
-
-  render() {
-    return (
-      <div>
-        <SearchGifs addNewImage={this.addNewImage}/>
-        <ShowGifs gifs={this.state.images}/>
-      </div>
-    );
-  }
-}
-
-ReactDOM.render(<App/>,
-  document.getElementById('app'));
+// ReactDOM.render(<App/>,
+//   document.getElementById('app'));

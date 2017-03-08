@@ -1,13 +1,29 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import webpack from 'webpack';
+import uriUtil from 'mongodb-uri';
 import path from 'path';
 import config from '../webpack.config.dev';
 import open from 'open';
+let app = express();
 
 /* eslint-disable no-console */
+let router = express.Router();
 
+let mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
+let mongodbUri = process.env.MONGODB_URI || 'mongodb://localhost/giphys';
+let mongooseUri = uriUtil.formatMongoose(mongodbUri);
+let options = {
+  server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
+  replset: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }
+};
+mongoose.connect(mongooseUri, options);
+let Giphy = require('../models/giphy');
+let giphyRoutes = require('../routes/giphys');
 const port = 3000;
-const app = express();
+
 const compiler = webpack(config);
 
 app.use(require('webpack-dev-middleware')(compiler, {
@@ -15,11 +31,17 @@ app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath
 }));
 
-app.use(require('webpack-hot-middleware')(compiler));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.get('*', function(req, res) {
+app.use(require('webpack-hot-middleware')(compiler));
+app.use('/api', giphyRoutes);
+
+
+app.get('/', function(req, res) {
   res.sendFile(path.join( __dirname, '../src/index.html'));
 });
+
 
 app.listen(port, function(err) {
   if (err) {

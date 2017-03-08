@@ -1,4 +1,5 @@
 import React from 'react';
+import App from './App';
 
 class SearchGifs extends React.Component {
 
@@ -29,7 +30,11 @@ class SearchGifs extends React.Component {
   handleNewGif(event) {
     event.preventDefault();
     this.props.addNewImage(this.state);
+
   }
+
+
+
 
   render() {
     return (
