@@ -14,6 +14,7 @@ class SearchGifs extends React.Component {
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleUrlChange = this.handleUrlChange.bind(this);
     this.handleNewGif = this.handleNewGif.bind(this);
+    this.addNewImage = this.addNewImage.bind(this);
   }
 
   handleNameChange(e) {
@@ -29,11 +30,31 @@ class SearchGifs extends React.Component {
 
   handleNewGif(event) {
     event.preventDefault();
-    this.props.addNewImage(this.state);
+    this.addNewImage(this.state);
 
   }
 
+  addNewImage(img) {
+    fetch('/api/giphys', {
+       method: 'POST',
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({
+         name: img.name,
+         url: img.url,
+         description: img.description
+      })
+    });
+    // .then(function(result) {return result.json();})
+    // .then(image => {
+    //   let allImages = this.state.images.slice();
+    //   allImages.push(image);
+    //   this.setState({images: allImages});
+    // });
 
+  }
 
 
   render() {

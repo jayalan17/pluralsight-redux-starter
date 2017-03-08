@@ -5,6 +5,7 @@ import SearchGiphy from './SearchGiphy';
 import NavLink from './NavLink';
 
 
+
 class App extends React.Component {
 
   constructor() {
@@ -72,10 +73,11 @@ class App extends React.Component {
     return (
       <div>
         <h1>Find Your Perfect Giphy</h1>
-        <ul role="nav">
+    <ul>
           <li><NavLink to="/" onlyActiveOnIndex>Home</NavLink></li>
           <li><NavLink to="/SearchGiphy">Search</NavLink></li>
           <li><NavLink to="/SearchGifs">Add New Gif</NavLink></li>
+
         </ul>
         <ShowGifs addNewImage={this.addNewImage}
         gifs={this.state.images} deleteImage={this.deleteImage} noButton/>

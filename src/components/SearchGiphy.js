@@ -14,6 +14,7 @@ class SearchGiphy extends React.Component {
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.removeOurImage = this.removeOurImage.bind(this);
+    this.addNewImage = this.addNewImage.bind(this);
   }
 
   removeOurImage(image) {
@@ -45,7 +46,27 @@ class SearchGiphy extends React.Component {
     }));
   }
 
-  
+  addNewImage(img) {
+    fetch('/api/giphys', {
+       method: 'POST',
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({
+         name: img.name,
+         url: img.url,
+         description: img.description
+      })
+    });
+    // .then(function(result) {return result.json();})
+    // .then(image => {
+    //   let allImages = this.state.images.slice();
+    //   allImages.push(image);
+    //   this.setState({images: allImages});
+    // });
+
+  }
 
   render() {
     return (
@@ -61,7 +82,7 @@ class SearchGiphy extends React.Component {
           <button onClick={this.handleSubmit} type="submit" className="btn btn-primary">Submit</button>
 
       </form>
-        <ShowGifs addNewImage={this.props.addNewImage}
+        <ShowGifs addNewImage={this.addNewImage}
         gifs={this.state.foundImages} removeOurImage={this.removeOurImage} noButton={false}/>
 
       </div>
