@@ -1,6 +1,13 @@
 let express = require('express');
 let router = express.Router();
 let Giphy = require('../models/giphy');
+let User = require('../models/user');
+let hash = require('password-hash');
+let jwt = require('jsonwebtoken');
+let app = express();
+let config = require('../config');
+
+app.set('superSecret', config.secret);
 
 
 router.use(function(req, res, next){
@@ -75,5 +82,58 @@ router.route('/giphys/:giphy_id')
       }
     });
   });
+
+  router.post('giphys/authenticate', function(req, res) {
+      console.log('Authenticating....', req);
+      // find the user
+      User.findOne({
+          name: req.body.name
+      }, function(err, user) {
+          console.log(user);
+          if (err) throw err;
+
+          if (!user) {
+              res.json({ success: false, message: 'Authentication failed. User not found.' });
+          } else if (user) {
+
+              // check if password matches
+              if (!hash.verify(req.user.password, user.password)) {
+                  res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+              } else {
+
+                  // if user is found and password is right
+                  // create a token
+                  let token = jwt.sign(user, app.get('superSecret'), {
+                      expiresIn: 86400 // expires in 24 hours
+                  });
+
+                  res.json({
+                      success: true,
+                      message: 'Enjoy your token!',
+                      token: token
+                  });
+              }
+
+          }
+
+      });
+  });
+
+  router.route('/user')
+    .post(function(req, res){
+
+      let user = new User();
+
+      user.name = req.body.name;
+      user.password = hash.generate(req.body.password);
+
+      user.save(function(err, user, next){
+        if(err){
+          next(err);
+        } else {
+          res.json(user);
+        }
+      });
+    });
 
 module.exports = router;

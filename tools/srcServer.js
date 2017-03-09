@@ -4,6 +4,7 @@ import webpack from 'webpack';
 import uriUtil from 'mongodb-uri';
 import path from 'path';
 import config from '../webpack.config.dev';
+import morgan from 'morgan';
 import open from 'open';
 let app = express();
 
@@ -21,6 +22,8 @@ let options = {
 };
 mongoose.connect(mongooseUri, options);
 let Giphy = require('../models/giphy');
+let NewUser = require('../models/user');
+let userRoutes = require('../routes/giphys');
 let giphyRoutes = require('../routes/giphys');
 const port = 3000;
 
@@ -31,11 +34,12 @@ app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath
 }));
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(require('webpack-hot-middleware')(compiler));
 app.use('/api', giphyRoutes);
+app.use('/api', userRoutes);
 
 
 app.get('/', function(req, res) {

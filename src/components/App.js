@@ -2,6 +2,7 @@ import React from 'react';
 import ShowGifs from './ShowGifs';
 import SearchGifs from './SearchGifs';
 import SearchGiphy from './SearchGiphy';
+import LoginPage from './LoginPage';
 import NavLink from './NavLink';
 
 
@@ -75,6 +76,7 @@ class App extends React.Component {
         <h1>Find Your Perfect Giphy</h1>
     <ul>
           <li><NavLink to="/" onlyActiveOnIndex>Home</NavLink></li>
+          <li><NavLink to="/LoginPage">Login Page</NavLink></li>
           <li><NavLink to="/SearchGiphy">Search</NavLink></li>
           <li><NavLink to="/SearchGifs">Add New Gif</NavLink></li>
 
