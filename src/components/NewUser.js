@@ -1,20 +1,16 @@
 import React from 'react';
-import {browserHistory} from 'react-router';
 
-class LoginPage extends React.Component {
+class NewUser extends React.Component {
   constructor() {
     super();
     this.state = {
       name: "",
       password: "",
-      admin: false,
-      email: "",
-      loginMsg: ""
+      email: ""
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleAdminChange = this.handleAdminChange.bind(this);
-    this.handleLoginUser = this.handleLoginUser.bind(this);
+    this.handleNewUser = this.handleNewUser.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
   }
 
@@ -24,23 +20,16 @@ class LoginPage extends React.Component {
   handlePasswordChange(e) {
     this.setState({password: e.target.value});
   }
-  handleAdminChange(e) {
-    this.setState({admin: e.target.value});
-  }
   handleEmailChange(e) {
     this.setState({email: e.target.value});
   }
-
-  handleLoginUser(event) {
-    event.preventDefault();
-    let user = {name: this.state.name, password: this.state.password};
-    console.log(user);
-    this.LoginUser(user);
-    this.setState({name: "", password: ""});
+  handleNewUser(event) {
+    // event.preventDefault();
+    this.NewUser(this.state);
   }
 
-  LoginUser(usr) {
-    fetch('/api/authenticate', {
+  NewUser(usr) {
+    fetch('/api/user', {
        method: 'POST',
        headers: {
          'Accept': 'application/json',
@@ -48,24 +37,17 @@ class LoginPage extends React.Component {
        },
        body: JSON.stringify({
          name: usr.name,
-         password: usr.password
+         password: usr.password,
+         email: usr.email
       })
-    })
-    .then(function(result) {return result.json();})
-    .then(loginCred => {
-      console.log(loginCred);
-      if (loginCred.success) {
-        browserHistory.push('/Main');
-      } else {
-        this.setState({loginMsg: loginCred.message});
-      }
     });
   }
+
 
   render() {
     return (
       <form method="" role="form">
-          <legend>{this.state.loginMsg == "" ? "Please Log In": this.state.loginMsg}</legend>
+          <legend>Please Register</legend>
 
           <div className="form-group">
             <input onChange={this.handleNameChange} value={this.state.name} type="text" className="form-control" id="username" placeholder="username"/>
@@ -75,14 +57,18 @@ class LoginPage extends React.Component {
             <input onChange={this.handlePasswordChange} value={this.state.password}type="text" className="form-control" id="password" placeholder="password"/>
           </div>
 
-          <button onClick={this.handleLoginUser} type="submit" className="btn btn-primary">Submit</button>
+          <div className="form-group">
+            <input onChange={this.handleEmailChange} value={this.state.email}type="text" className="form-control" id="email" placeholder="email"/>
+          </div>
+
+          <button onClick={this.handleNewUser} type="submit" className="btn btn-primary">Submit</button>
        </form>
     );
   }
   }
 
-  LoginPage.propTypes = {
-  LoginUser: React.PropTypes.func
+  NewUser.propTypes = {
+  NewUser: React.PropTypes.func
   };
 
-  export default LoginPage;
+  export default NewUser;

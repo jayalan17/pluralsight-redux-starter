@@ -2,6 +2,8 @@ import React from 'react';
 import ShowGifs from './ShowGifs';
 import SoloImageWithButton from './SoloImageWithButton';
 import App from './App';
+import { inject, observer } from 'mobx-react';
+
 
 class SearchGiphy extends React.Component {
 
@@ -14,7 +16,6 @@ class SearchGiphy extends React.Component {
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.removeOurImage = this.removeOurImage.bind(this);
-    this.addNewImage = this.addNewImage.bind(this);
   }
 
   removeOurImage(image) {
@@ -46,27 +47,6 @@ class SearchGiphy extends React.Component {
     }));
   }
 
-  addNewImage(img) {
-    fetch('/api/giphys', {
-       method: 'POST',
-       headers: {
-         'Accept': 'application/json',
-         'Content-Type': 'application/json'
-       },
-       body: JSON.stringify({
-         name: img.name,
-         url: img.url,
-         description: img.description
-      })
-    });
-    // .then(function(result) {return result.json();})
-    // .then(image => {
-    //   let allImages = this.state.images.slice();
-    //   allImages.push(image);
-    //   this.setState({images: allImages});
-    // });
-
-  }
 
   render() {
     return (
@@ -82,7 +62,7 @@ class SearchGiphy extends React.Component {
           <button onClick={this.handleSubmit} type="submit" className="btn btn-primary">Submit</button>
 
       </form>
-        <ShowGifs addNewImage={this.addNewImage}
+        <ShowGifs addNewImage={this.props.imageStore.addNewImage}
         gifs={this.state.foundImages} removeOurImage={this.removeOurImage} noButton={false}/>
 
       </div>
@@ -92,7 +72,8 @@ class SearchGiphy extends React.Component {
 }
 
 SearchGiphy.propTypes = {
-  addNewImage: React.PropTypes.func
+  addNewImage: React.PropTypes.func,
+  imageStore: React.PropTypes.object
 };
 
-export default SearchGiphy;
+export default inject ("imageStore")(observer(SearchGiphy));

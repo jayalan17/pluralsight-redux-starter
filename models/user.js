@@ -3,7 +3,7 @@ let mongoose = require('mongoose');
 let NewUserSchema = new mongoose.Schema({
   name: String,
   password: String,
-  admin: Boolean
+  email: String
 });
 
 module.exports = mongoose.model('newUser', NewUserSchema);

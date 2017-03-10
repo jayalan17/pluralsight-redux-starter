@@ -83,8 +83,26 @@ router.route('/giphys/:giphy_id')
     });
   });
 
-  router.post('giphys/authenticate', function(req, res) {
-      console.log('Authenticating....', req);
+  router.route('/user')
+    .post(function(req, res){
+
+      let user = new User();
+
+      user.name = req.body.name;
+      user.password = hash.generate(req.body.password);
+      user.email = req.body.email;
+
+      user.save(function(err, user, next){
+        if(err){
+          next(err);
+        } else {
+          res.json(user);
+        }
+      });
+    });
+
+  router.post('/authenticate', function(req, res) {
+      console.log('Authenticating....', req.body.name, req.body.password);
       // find the user
       User.findOne({
           name: req.body.name
@@ -97,7 +115,7 @@ router.route('/giphys/:giphy_id')
           } else if (user) {
 
               // check if password matches
-              if (!hash.verify(req.user.password, user.password)) {
+              if (!hash.verify(req.body.password, user.password)) {
                   res.json({ success: false, message: 'Authentication failed. Wrong password.' });
               } else {
 
@@ -119,21 +137,35 @@ router.route('/giphys/:giphy_id')
       });
   });
 
-  router.route('/user')
-    .post(function(req, res){
+  router.use(function(req, res, next) {
 
-      let user = new User();
+  // check header or url parameters or post parameters for token
+  let token = req.body.token || req.query.token || req.headers['x-access-token'];
 
-      user.name = req.body.name;
-      user.password = hash.generate(req.body.password);
+  // decode token
+  if (token) {
 
-      user.save(function(err, user, next){
-        if(err){
-          next(err);
-        } else {
-          res.json(user);
-        }
-      });
+    // verifies secret and checks exp
+    jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+      if (err) {
+        return res.json({ success: false, message: 'Failed to authenticate token.' });
+      } else {
+        // if everything is good, save to request for use in other routes
+        req.decoded = decoded;
+        next();
+      }
     });
+
+  } else {
+
+    // if there is no token
+    // return an error
+    return res.status(403).send({
+        success: false,
+        message: 'No token provided.'
+    });
+
+  }
+});
 
 module.exports = router;

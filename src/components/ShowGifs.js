@@ -1,5 +1,8 @@
 import React from 'react';
 import SoloImageWithButton from './SoloImageWithButton';
+import { observer } from 'mobx-react';
+
+
 ShowGifs.propTypes = {
   gifs: React.PropTypes.array,
   addNewImage: React.PropTypes.func,
@@ -16,7 +19,7 @@ function deleteOurImage() {
 // this.deleteOurImage = this.deleteOurImage.bind(this);
 
 
-export default function ShowGifs(props) {
+function ShowGifs(props) {
   let images = props.gifs.map(function(img) {
     return (
       <SoloImageWithButton key={img.name} img={img}
@@ -29,3 +32,4 @@ export default function ShowGifs(props) {
     </div>
   );
 }
+export default observer(ShowGifs);
