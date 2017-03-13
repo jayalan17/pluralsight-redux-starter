@@ -9,17 +9,13 @@ class SoloImageWithButton extends React.Component {
     this.addOurImage = this.addOurImage.bind(this);
     this.deleteOurImage = this.deleteOurImage.bind(this);
   }
-
   addOurImage() {
     this.props.addNewImage(this.props.img);
     this.props.removeOurImage(this.props.img);
   }
-
   deleteOurImage() {
     this.props.deleteImage(this.props.img);
   }
-
-  
 
   render() {
     let ourButton = (
@@ -31,7 +27,6 @@ class SoloImageWithButton extends React.Component {
       <button onClick={this.deleteOurImage}
       type="submit" className="btn btn-danger">Delete This Image</button>
     );
-
 
     return(
       <div key={this.props.img.name}>
@@ -49,8 +44,6 @@ SoloImageWithButton.propTypes = {
   noButton: React.PropTypes.bool,
   removeOurImage: React.PropTypes.func,
   deleteImage: React.PropTypes.func
-
-
 };
 
 export default SoloImageWithButton;

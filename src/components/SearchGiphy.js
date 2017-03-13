@@ -32,7 +32,7 @@ class SearchGiphy extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    fetch(`http://api.giphy.com/v1/gifs/search?q=${this.state.keyword}&limit=3&api_key=dc6zaTOxFJmzC`)
+    fetch(`http://api.giphy.com/v1/gifs/search?q=${this.state.keyword}&limit=6&api_key=dc6zaTOxFJmzC`)
       .then(function(result) {return result.json();})
       .then(data => this.setState({
         foundImages: this.convertToShowGifs(this.state.keyword, data.data)}));
@@ -43,7 +43,7 @@ class SearchGiphy extends React.Component {
     return foundImages.map(image => ({
       name: image.id,
       url: image.images.original.url,
-      description: keyword + " " + image.slug
+      description: keyword
     }));
   }
 

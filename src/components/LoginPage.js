@@ -1,5 +1,7 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
+import { inject, observer } from 'mobx-react';
+import NavLink from './NavLink';
 
 class LoginPage extends React.Component {
   constructor() {
@@ -33,37 +35,13 @@ class LoginPage extends React.Component {
 
   handleLoginUser(event) {
     event.preventDefault();
-    let user = {name: this.state.name, password: this.state.password};
-    console.log(user);
-    this.LoginUser(user);
+    this.props.userStore.LoginUser(this.state.name, this.state.password);
     this.setState({name: "", password: ""});
-  }
-
-  LoginUser(usr) {
-    fetch('/api/authenticate', {
-       method: 'POST',
-       headers: {
-         'Accept': 'application/json',
-         'Content-Type': 'application/json'
-       },
-       body: JSON.stringify({
-         name: usr.name,
-         password: usr.password
-      })
-    })
-    .then(function(result) {return result.json();})
-    .then(loginCred => {
-      console.log(loginCred);
-      if (loginCred.success) {
-        browserHistory.push('/Main');
-      } else {
-        this.setState({loginMsg: loginCred.message});
-      }
-    });
   }
 
   render() {
     return (
+      <div>
       <form method="" role="form">
           <legend>{this.state.loginMsg == "" ? "Please Log In": this.state.loginMsg}</legend>
 
@@ -77,12 +55,17 @@ class LoginPage extends React.Component {
 
           <button onClick={this.handleLoginUser} type="submit" className="btn btn-primary">Submit</button>
        </form>
+       <div>
+          <li><NavLink to="/">Home</NavLink></li>
+        </div>
+      </div>
     );
   }
   }
 
   LoginPage.propTypes = {
-  LoginUser: React.PropTypes.func
+    LoginUser: React.PropTypes.func,
+    userStore: React.PropTypes.object
   };
 
-  export default LoginPage;
+  export default inject("userStore")(observer(LoginPage));

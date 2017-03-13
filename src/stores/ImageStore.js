@@ -6,6 +6,7 @@ export default class ImageStore {
       images: []
     });
     this.addNewImage = this.addNewImage.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
   }
 
   setImages(images) {
@@ -31,6 +32,14 @@ export default class ImageStore {
       allImages.push(image);
       this.images = allImages;
     });
+  }
 
+  deleteImage(img) {
+    let allImages=this.images.slice();
+    allImages=allImages.filter(i => img._id !==i._id);
+    this.images = allImages;
+    fetch(`/api/giphys/${img._id}`, {
+       method: 'DELETE'
+    });
   }
 }

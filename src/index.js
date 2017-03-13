@@ -9,24 +9,29 @@ import SearchGifs from './components/SearchGifs';
 import LoginPage from './components/LoginPage';
 import NewUser from './components/NewUser';
 import Main from './components/Main';
-import MainToo from './components/MainToo';
+import Library from './components/Library';
 import ImageStore from './stores/ImageStore';
+import UserStore from './stores/UserStore';
 import { Provider } from 'mobx-react';
+import ShowGifs from './components/ShowGifs';
 
 const imageStore = new ImageStore () ;
+const userStore = new UserStore () ;
 
 render((
-  <Provider imageStore = {imageStore}>
+  <Provider imageStore = {imageStore} userStore = {userStore}>
     <Router history={browserHistory}>
-      <Route path="/" component={App}>
-        <IndexRoute component={Home}/>
+      <Route>
         <Route path="/LoginPage" component={LoginPage}/>
         <Route path="/NewUser" component={NewUser}/>
-
         <Route path="/Main" component={Main}>
           <Route path="/SearchGiphy" component={SearchGiphy}/>
           <Route path="/SearchGifs" component={SearchGifs}/>
+          <Route path="/Library" component={ShowGifs}/>
         </Route>
+      </Route>
+      <Route path="/" component={App}>
+        <IndexRoute component={Home}/>
       </Route>
     </Router>
     </Provider>

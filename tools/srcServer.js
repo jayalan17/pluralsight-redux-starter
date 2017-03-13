@@ -7,7 +7,6 @@ import config from '../webpack.config.dev';
 import morgan from 'morgan';
 import open from 'open';
 let app = express();
-
 /* eslint-disable no-console */
 let router = express.Router();
 
@@ -24,8 +23,8 @@ mongoose.connect(mongooseUri, options);
 let Giphy = require('../models/giphy');
 let NewUser = require('../models/user');
 let giphyRoutes = require('../routes/giphys');
-const port = 3000;
 
+const port = 3000;
 const compiler = webpack(config);
 
 app.use(require('webpack-dev-middleware')(compiler, {
