@@ -35,11 +35,6 @@ class App extends React.Component {
             <li><NavLink to="/NewUser">New User</NavLink></li>
           </ul>
         </div>
-      <div>
-        <ShowGifs addNewImage={this.props.imageStore.addNewImage}
-        gifs={this.props.imageStore.images} deleteImage={this.props.imageStore.deleteImage} noButton/>
-        {this.props.children}
-      </div>
     </div>
     );
   }

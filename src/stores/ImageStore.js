@@ -23,7 +23,8 @@ export default class ImageStore {
        body: JSON.stringify({
          name: img.name,
          url: img.url,
-         description: img.description
+         description: img.description,
+         owner: img.owner
       })
     })
     .then(function(result) {return result.json();})

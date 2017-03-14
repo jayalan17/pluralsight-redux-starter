@@ -25,6 +25,7 @@ router.route('/giphys')
     giphy.name = req.body.name;
     giphy.url = req.body.url;
     giphy.description = req.body.description;
+    giphy.owner = req.body.owner;
 
     giphy.save(function(err, giphys, next){
       if(err){
@@ -124,11 +125,12 @@ router.route('/giphys/:giphy_id')
                   let token = jwt.sign(user, app.get('superSecret'), {
                       expiresIn: 86400 // expires in 24 hours
                   });
-
+                  console.log(user);
                   res.json({
                       success: true,
                       message: 'Enjoy your token!',
-                      token: token
+                      token: token,
+                      id: user._id
                   });
               }
 

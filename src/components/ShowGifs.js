@@ -2,7 +2,7 @@ import React from 'react';
 import SoloImageWithButton from './SoloImageWithButton';
 
 ShowGifs.propTypes = {
-  gifs: React.PropTypes.array,
+  gifs: React.PropTypes.object,
   addNewImage: React.PropTypes.func,
   noButton: React.PropTypes.bool,
   removeOurImage: React.PropTypes.func,
@@ -15,6 +15,7 @@ function deleteOurImage() {
 }
 
 function ShowGifs(props) {
+  console.log(props);
   let images = props.gifs.map(function(img) {
     return (
       <SoloImageWithButton key={img.name} img={img}

@@ -27,7 +27,7 @@ render((
         <Route path="/Main" component={Main}>
           <Route path="/SearchGiphy" component={SearchGiphy}/>
           <Route path="/SearchGifs" component={SearchGifs}/>
-          <Route path="/Library" component={ShowGifs}/>
+          <Route path="/Library" component={Library}/>
         </Route>
       </Route>
       <Route path="/" component={App}>

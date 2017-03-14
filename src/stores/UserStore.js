@@ -9,7 +9,9 @@ export default class UserStore {
       admin: false,
       email: "",
       loginMsg: "",
-      loggedInUser: false
+      loggedInUser: false,
+      id: "",
+      token: ""
     });
     this.LoginUser = this.LoginUser.bind(this);
   }
@@ -31,7 +33,8 @@ export default class UserStore {
       return result.json();})
     .then(loginCred => {
       if (loginCred.success && loginCred.token){
-        alert ('Login Successful!');
+        this.id = loginCred.id;
+        this.token = loginCred.token;
         browserHistory.push('/Main');
         this.loggedInUser=true;
         this.name=name;

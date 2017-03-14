@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchGiphy from './SearchGiphy';
 import App from './App';
+import { inject, observer } from 'mobx-react';
 
 class SoloImageWithButton extends React.Component {
 
@@ -10,6 +11,8 @@ class SoloImageWithButton extends React.Component {
     this.deleteOurImage = this.deleteOurImage.bind(this);
   }
   addOurImage() {
+    let image = this.props.img;
+    image.owner = this.props.userStore.id;
     this.props.addNewImage(this.props.img);
     this.props.removeOurImage(this.props.img);
   }
@@ -23,10 +26,16 @@ class SoloImageWithButton extends React.Component {
       type="submit" className="btn btn-primary">Add To My List</button>
     );
 
-    let deleteButton = (
-      <button onClick={this.deleteOurImage}
-      type="submit" className="btn btn-danger">Delete This Image</button>
-    );
+    let deleteButton;
+    //if image owner is logged in//
+    if (this.props.img.owner === this.props.userStore.id) {
+      deleteButton = (
+        <button onClick={this.deleteOurImage}
+        type="submit" className="btn btn-danger">Delete This Image</button>
+      );
+    } else {
+      deleteButton = "";
+    }
 
     return(
       <div key={this.props.img.name}>
@@ -43,7 +52,8 @@ SoloImageWithButton.propTypes = {
   addNewImage: React.PropTypes.func,
   noButton: React.PropTypes.bool,
   removeOurImage: React.PropTypes.func,
-  deleteImage: React.PropTypes.func
+  deleteImage: React.PropTypes.func,
+  userStore: React.PropTypes.object
 };
 
-export default SoloImageWithButton;
+export default inject("userStore")(observer(SoloImageWithButton));
