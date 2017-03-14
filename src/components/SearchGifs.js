@@ -1,5 +1,7 @@
 import React from 'react';
 import App from './App';
+import { browserHistory } from 'react-router';
+import { inject, observer } from 'mobx-react';
 
 class SearchGifs extends React.Component {
 
@@ -8,7 +10,8 @@ class SearchGifs extends React.Component {
     this.state = {
       name: "",
       url: "",
-      description: ""
+      description: "",
+      owner: ""
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
@@ -44,18 +47,15 @@ class SearchGifs extends React.Component {
        body: JSON.stringify({
          name: img.name,
          url: img.url,
-         description: img.description
+         description: img.description,
+         owner: img.owner
       })
+    })
+    .then(function(){
+      alert ('Giggity giggity..');
+      browserHistory.push('/Library');
     });
-    // .then(function(result) {return result.json();})
-    // .then(image => {
-    //   let allImages = this.state.images.slice();
-    //   allImages.push(image);
-    //   this.setState({images: allImages});
-    // });
-
   }
-
 
   render() {
     return (
@@ -84,4 +84,4 @@ SearchGifs.propTypes = {
   addNewImage: React.PropTypes.func
 };
 
-export default SearchGifs;
+export default inject("userStore")(observer(SearchGifs));

@@ -25,6 +25,7 @@ router.route('/giphys')
     giphy.name = req.body.name;
     giphy.url = req.body.url;
     giphy.description = req.body.description;
+    giphy.admin = req.body.admin;
     giphy.owner = req.body.owner;
 
     giphy.save(function(err, giphys, next){
@@ -92,6 +93,8 @@ router.route('/giphys/:giphy_id')
       user.name = req.body.name;
       user.password = hash.generate(req.body.password);
       user.email = req.body.email;
+      user.admin = req.body.admin;
+      user.owner = req.body.owner;
 
       user.save(function(err, user, next){
         if(err){
@@ -130,6 +133,7 @@ router.route('/giphys/:giphy_id')
                       success: true,
                       message: 'Enjoy your token!',
                       token: token,
+                      admin: user.admin,
                       id: user._id
                   });
               }

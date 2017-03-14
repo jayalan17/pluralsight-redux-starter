@@ -27,8 +27,8 @@ class SoloImageWithButton extends React.Component {
     );
 
     let deleteButton;
-    //if image owner is logged in//
-    if (this.props.img.owner === this.props.userStore.id) {
+      console.log(this.props.userStore);
+      if ((this.props.img.owner === this.props.userStore.id) || this.props.userStore.admin) {
       deleteButton = (
         <button onClick={this.deleteOurImage}
         type="submit" className="btn btn-danger">Delete This Image</button>

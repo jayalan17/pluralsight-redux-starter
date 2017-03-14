@@ -8,7 +8,8 @@ class NewUser extends React.Component {
     this.state = {
       name: "",
       password: "",
-      email: ""
+      email: "",
+      admin: false
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -43,7 +44,8 @@ class NewUser extends React.Component {
        body: JSON.stringify({
          name: usr.name,
          password: usr.password,
-         email: usr.email
+         email: usr.email,
+         admin: usr.admin
       })
     })
     .then(function(){
@@ -82,7 +84,7 @@ class NewUser extends React.Component {
   }
 
   NewUser.propTypes = {
-  NewUser: React.PropTypes.func
+    NewUser: React.PropTypes.func
   };
 
   export default NewUser;

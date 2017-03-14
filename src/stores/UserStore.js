@@ -32,12 +32,21 @@ export default class UserStore {
       console.log(result);
       return result.json();})
     .then(loginCred => {
-      if (loginCred.success && loginCred.token){
+      console.log(loginCred);
+      if (loginCred.admin) {
         this.id = loginCred.id;
+        this.name = name;
+        this.admin = loginCred.admin;
+        browserHistory.push('/Main');
+      }
+      else if(loginCred.success && loginCred.token){
+        this.id = loginCred.id;
+        this.admin = loginCred.admin;
         this.token = loginCred.token;
         browserHistory.push('/Main');
-        this.loggedInUser=true;
-        this.name=name;
+        this.loggedInUser = true;
+        this.name = name;
+
       } else {
         alert (loginCred.message);
         this.loggedInUser=false;

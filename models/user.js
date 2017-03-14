@@ -9,6 +9,9 @@ let NewUserSchema = new mongoose.Schema({
   },
   email: {
     type: String
+  },
+  admin: {
+    type: Boolean
   }
 });
 

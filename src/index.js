@@ -14,6 +14,9 @@ import ImageStore from './stores/ImageStore';
 import UserStore from './stores/UserStore';
 import { Provider } from 'mobx-react';
 import ShowGifs from './components/ShowGifs';
+import Admin from './components/Admin';
+import EditUser from './components/EditUser';
+
 
 const imageStore = new ImageStore () ;
 const userStore = new UserStore () ;
@@ -24,6 +27,10 @@ render((
       <Route>
         <Route path="/LoginPage" component={LoginPage}/>
         <Route path="/NewUser" component={NewUser}/>
+        <Route path="/Admin" component={Admin}>
+          <Route path="/EditUser" component={EditUser}/>
+
+        </Route>
         <Route path="/Main" component={Main}>
           <Route path="/SearchGiphy" component={SearchGiphy}/>
           <Route path="/SearchGifs" component={SearchGifs}/>

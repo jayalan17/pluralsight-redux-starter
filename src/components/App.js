@@ -6,7 +6,9 @@ import LoginPage from './LoginPage';
 import NavLink from './NavLink';
 import NewUser from './NewUser';
 import { inject, observer } from 'mobx-react';
-
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import {NavbarHeader, NavbarToggle, NavbarCollapse, NavbarBrand} from 'react-bootstrap/lib/NavbarHeader';
+import { LinkContainer} from 'react-router-bootstrap';
 
 class App extends React.Component {
 

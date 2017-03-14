@@ -15,7 +15,6 @@ function deleteOurImage() {
 }
 
 function ShowGifs(props) {
-  console.log(props);
   let images = props.gifs.map(function(img) {
     return (
       <SoloImageWithButton key={img.name} img={img}
