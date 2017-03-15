@@ -39,14 +39,13 @@ export default class UserStore {
         this.admin = loginCred.admin;
         browserHistory.push('/Main');
       }
-      else if(loginCred.success && loginCred.token){
+      else if (loginCred.success && loginCred.token) {
         this.id = loginCred.id;
         this.admin = loginCred.admin;
         this.token = loginCred.token;
         browserHistory.push('/Main');
         this.loggedInUser = true;
         this.name = name;
-
       } else {
         alert (loginCred.message);
         this.loggedInUser=false;

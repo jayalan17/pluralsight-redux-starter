@@ -18,7 +18,7 @@ router.use(function(req, res, next){
 
 
 router.route('/giphys')
-  .post(function(req, res){
+  .post(function(req, res, next){
 
     let giphy = new Giphy();
 
@@ -28,7 +28,7 @@ router.route('/giphys')
     giphy.admin = req.body.admin;
     giphy.owner = req.body.owner;
 
-    giphy.save(function(err, giphys, next){
+    giphy.save(function(err, giphys){
       if(err){
         next(err);
       } else {
@@ -37,7 +37,7 @@ router.route('/giphys')
     });
   })
   .get(function(req, res){
-    Giphy.find(function(err, giphys){
+    Giphy.find().populate('owner').exec(function(err, giphys){
       if(err){
         return (err);
       } else {

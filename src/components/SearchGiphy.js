@@ -36,7 +36,6 @@ class SearchGiphy extends React.Component {
       .then(function(result) {return result.json();})
       .then(data => this.setState({
         foundImages: this.convertToShowGifs(this.state.keyword, data.data)}));
-
   }
 
   convertToShowGifs(keyword, foundImages) {
@@ -46,7 +45,6 @@ class SearchGiphy extends React.Component {
       description: keyword
     }));
   }
-
 
   render() {
     return (

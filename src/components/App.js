@@ -8,7 +8,8 @@ import NewUser from './NewUser';
 import { inject, observer } from 'mobx-react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import {NavbarHeader, NavbarToggle, NavbarCollapse, NavbarBrand} from 'react-bootstrap/lib/NavbarHeader';
-import { LinkContainer} from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Router, Route, browserHistory, IndexRoute, Link } from 'react-router';
 
 class App extends React.Component {
 
@@ -32,11 +33,22 @@ class App extends React.Component {
     <div>
       <div>
         <h1>Find Your Perfect Giphy</h1>
-          <ul>
-            <li><NavLink to="/LoginPage">Login Page</NavLink></li>
-            <li><NavLink to="/NewUser">New User</NavLink></li>
-          </ul>
-        </div>
+      </div>
+      <div>
+        <Navbar inverse collapseOnSelect>
+          <Navbar.Header>
+            <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand>
+            <Navbar.Toggle/>
+          </Navbar.Header>
+          <Navbar.Collapse>
+            <Nav>
+              <LinkContainer to={{pathname: '/LoginPage'}}><NavItem>Login Page</NavItem></LinkContainer>
+              <LinkContainer to={{pathname: '/NewUser'}}><NavItem>Create an Account</NavItem></LinkContainer>
+            </Nav>
+            <Nav pullRight className="nav-bar-right"/>
+          </Navbar.Collapse>
+        </Navbar>
+      </div>
     </div>
     );
   }

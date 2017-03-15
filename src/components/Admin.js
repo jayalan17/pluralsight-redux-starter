@@ -8,7 +8,6 @@ class Admin extends React.Component {
       <h1>Database Administration</h1>
         <ul>
           <li><NavLink to="/EditUser">Edit User Accouts</NavLink></li>
-          <li><NavLink to="/EditGifs">Edit Gif Library</NavLink></li>
           <li><NavLink to="/Main">Main Menu</NavLink></li>
           <li><NavLink to="/">Home</NavLink></li>
         </ul>
